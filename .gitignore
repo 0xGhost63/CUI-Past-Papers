@@ -1,0 +1,42 @@
+# Python virtual environments
+ghost/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Local runtime directories and caches
+.cache_pdf/
+Past_Papers/
+*.pdf
+*.zip
+
+# Raw dumps and upstream identifiers
+*.raw.json
+.*raw*.json
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and editor artifacts
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Test logs and scratch files
+.pytest_cache/
+scratch/

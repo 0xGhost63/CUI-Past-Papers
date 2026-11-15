@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUI Past Papers Vault : Academic Archive</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+  <link rel="stylesheet" href="/static/css/style.css">
+  
+  <!-- Human Crafted Typography (Display Grotesk + Precision Monospace) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <!-- Low Contrast Animated GPU Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-layout">
+    <!-- Top Bento Grid Section -->
+    <section class="bento-header-grid">
+      
+      <!-- Tile 1: Brand & Identity (Ink Black, spans 8 cols) -->
+      <article class="bento-tile tile-brand">
+        <div class="brand-top-row">
+        <a href="https://github.com/0xGhost63/" target="_blank" rel="noopener noreferrer" class="footer-github-link" title="GitHub Profile: 0xGhost63">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+          </svg>
+          <span>0xGhost63</span>
+        </a>
+          
+        </div>
+
+        <div class="brand-content">
+          <h1 class="brand-heading">PAST PAPERS ARCHIVE</h1>
+          <p class="brand-sub">
+            COMSATS examination papers across all campuses.
+          </p>
+        </div>
+
+        <div class="brand-footer-row">
+          <button id="refresh-btn" class="tile-action-btn" title="Fetch newest papers from remote repository">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            <span>Sync Catalog</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 2: Theme & Controls (Lilac, spans 4 cols) -->
+      <article class="bento-tile tile-theme-controls">
+        <div class="tile-eyebrow">
+          <span>INTERFACE CONTROLS</span>
+        </div>
+
+        <!-- Custom Theme Switcher Tile Component -->
+        <div class="theme-switch-card">
+          <div class="theme-switch-labels">
+            <span class="theme-label-text">Appearance</span>
+            <span id="theme-status-text" class="theme-status-val">Light Mode</span>
+          </div>
+          <button id="theme-toggle-btn" class="theme-toggle-switch" type="button" aria-label="Toggle dark mode">
+            <div class="switch-handle">
+              <svg id="theme-sun-icon" class="switch-icon active" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+              <svg id="theme-moon-icon" class="switch-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </div>
+          </button>
+        </div>
+
+        <div class="quick-tools-grid">
+          <!-- Audio Haptics Toggle -->
+          <button id="sound-toggle-btn" class="quick-tool-btn" title="Toggle audio feedback">
+            <div class="eq-bars">
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+            </div>
+            <span>Audio</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 3: Search & Discovery Deck (Sun Yellow, spans 7 cols) -->
+      <article class="bento-tile tile-search-deck">
+        <div class="tile-eyebrow dark-ink">
+          <span>CATALOG QUERY &amp; REFINEMENT</span>
+        </div>
+
+        <!-- Search Input -->
+        <div class="search-box" id="search-box">
+          <span class="search-icon-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input
+            id="search-input"
+            type="text"
+            class="bento-search-field"
+            placeholder="Search course title, code (CSC270), instructor, or batch..."
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button id="search-clear-btn" class="search-clear-btn" title="Clear search" aria-label="Clear search" style="display: none;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          <div class="search-key-badge">
+            <span class="key-tag">/</span>
+          </div>
+        </div>
+
+        <!-- Filter Chips Section -->
+        <div class="filter-groups-stack">
+          <!-- Campus Selector (Default: Lahore) -->
+          <div class="filter-pill-row">
+            <span class="row-label">Campus:</span>
+            <div id="campus-pills" class="filter-pills-list">
+              <button class="pill-btn active" data-val="Lahore">Lahore</button>
+              <button class="pill-btn" data-val="ALL">All Campuses</button>
+              <button class="pill-btn" data-val="Islamabad">Islamabad</button>
+              <button class="pill-btn" data-val="Abbottabad">Abbottabad</button>
+              <button class="pill-btn" data-val="Wah">Wah</button>
+              <button class="pill-btn" data-val="Sahiwal">Sahiwal</button>
+              <button class="pill-btn" data-val="Vehaari">Vehari</button>
+              <button class="pill-btn" data-val="Attock">Attock</button>
+            </div>
+          </div>
+
+          <!-- Exam Type Selector -->
+          <div class="filter-pill-row">
+            <span class="row-label">Exam:</span>
+            <div id="exam-type-pills" class="filter-pills-list">
+              <button class="pill-btn active" data-val="ALL">All Exams</button>
+              <button class="pill-btn" data-val="Mid Term">Mid Term</button>
+              <button class="pill-btn" data-val="Final Term">Final Term</button>
+              <button class="pill-btn" data-val="1st Sessional">1st Sessional</button>
+              <button class="pill-btn" data-val="2nd Sessional">2nd Sessional</button>
+            </div>
+          </div>
+
+          <!-- Category Selector -->
+          <div class="filter-pill-row">
+            <span class="row-label">Category:</span>
+            <div id="category-pills" class="filter-pills-list">
+              <button class="pill-btn active" data-val="ALL">Theory &amp; Lab</button>
+              <button class="pill-btn" data-val="Theory">Theory</button>
+              <button class="pill-btn" data-val="Lab">Lab</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tile 4: Metrics Cluster (Spans 5 cols, 2x2 varied grid) -->
+      <div class="bento-metrics-cluster">
+        
+        <!-- Metric Tile A: Total Papers (Tomato Red) -->
+        <article class="bento-tile metric-tile tile-tomato">
+          <div class="metric-top">
+            <span class="metric-tag">INDEXED</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+          </div>
+          <div id="metric-total-papers" class="metric-number">0</div>
+          <div class="metric-name">Total Papers</div>
+        </article>
+
+        <!-- Metric Tile B: Subjects (Sky Blue) -->
+        <article class="bento-tile metric-tile tile-sky">
+          <div class="metric-top">
+            <span class="metric-tag">COURSES</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <div id="metric-total-subjects" class="metric-number">0</div>
+          <div class="metric-name">Subjects</div>
+        </article>
+
+        <!-- Metric Tile C: Instructors (Mint Green) -->
+        <article class="bento-tile metric-tile tile-mint">
+          <div class="metric-top">
+            <span class="metric-tag">FACULTY</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div id="metric-total-teachers" class="metric-number">0</div>
+          <div class="metric-name">Instructors</div>
+        </article>
+
+        <!-- Metric Tile D: Campuses (Orange) -->
+        <article class="bento-tile metric-tile tile-orange">
+          <div class="metric-top">
+            <span class="metric-tag">NETWORK</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 21h18"></path><path d="M5 21V7l7-4 7 4v14"></path></svg>
+          </div>
+          <div id="metric-campuses" class="metric-number">0</div>
+          <div class="metric-name">Campuses</div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Batch Selection Dock (Smooth sliding bento bar) -->
+    <section id="batch-dock" class="bento-batch-dock">
+      <div class="dock-left">
+        <div class="dock-badge">
+          <span id="batch-count" class="dock-count-num">0</span>
+          <span>papers selected</span>
+        </div>
+
+        <!-- Target Teacher Subfolder Input -->
+        <div class="dock-teacher-field">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <input 
+            id="batch-teacher-input" 
+            type="text" 
+            class="dock-input" 
+            placeholder="Optional: Target Teacher subfolder" 
+            list="teachers-datalist" 
+            autocomplete="off"
+            title="Saves matching papers into a dedicated instructor subfolder"
+          >
+          <datalist id="teachers-datalist"></datalist>
+        </div>
+      </div>
+
+      <div class="dock-actions">
+        <!-- ZIP Download -->
+        <button id="batch-zip-btn" class="dock-btn dock-btn-sky" title="Select location and package papers as a ZIP archive">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download ZIP</span>
+        </button>
+
+        <button id="batch-clear-btn" class="dock-btn dock-btn-plain">Clear</button>
+      </div>
+    </section>
+
+    <!-- Main Results Explorer Deck -->
+    <main class="bento-catalog-deck">
+      <!-- Toolbar Header -->
+      <div class="catalog-toolbar">
+        <div class="toolbar-left">
+          <div id="results-count" class="catalog-counter">
+            <span>Loading catalog index...</span>
+          </div>
+          <button id="select-all-btn" class="toolbar-btn" title="Toggle select all filtered papers" style="display: none;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span id="select-all-label">Select All</span>
+          </button>
+        </div>
+
+        <div class="toolbar-right">
+          <!-- Sort Selector -->
+          <div class="sort-wrap">
+            <span class="sort-label">Sort:</span>
+            <select id="sort-select" class="sort-select-box" title="Order filtered papers">
+              <option value="default">Default Catalog</option>
+              <option value="title">Course Title (A-Z)</option>
+              <option value="teacher">Instructor (A-Z)</option>
+              <option value="recent">Most Recently Uploaded</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Container: Papers Table -->
+      <div id="papers-container" class="papers-table-wrapper"></div>
+    </main>
+
+    <!-- Footer Note -->
+    <footer class="app-footer">
+      <div class="footer-note">
+        <span>Made With <3 by : </span>
+
+        <a href="https://github.com/0xGhost63/" target="_blank" rel="noopener noreferrer" class="footer-github-link" title="GitHub Profile: 0xGhost63">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+          </svg>
+          <span>0xGhost63</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Inspection Drawer Overlay & Drawer -->
+  <div id="drawer-overlay" class="drawer-overlay"></div>
+  <aside id="inspection-drawer" class="inspection-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title-wrap">
+        <span class="drawer-badge">PDF INSPECTOR</span>
+        <h3 class="drawer-title">Paper Preview &amp; Details</h3>
+      </div>
+      <button id="drawer-close-btn" class="drawer-close-btn" title="Close Preview (Esc)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div id="drawer-content" class="drawer-body"></div>
+  </aside>
+
+  <!-- Toast Notification Hub -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- User Requested Jelly Ooze SVG Filter Definition -->
+  <svg width="0" height="0" class="svg" aria-hidden="true" style="position: absolute; width: 0; height: 0; pointer-events: none; overflow: hidden;">
+    <defs>
+      <filter id="uib-jelly-ooze">
+        <feGaussianBlur
+          in="SourceGraphic"
+          stdDeviation="5"
+          result="blur"
+        />
+        <feColorMatrix
+          in="blur"
+          mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+          result="ooze"
+        />
+        <feBlend in="SourceGraphic" in2="ooze" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Scripts -->
+  <script src="/static/js/icons.js"></script>
+  <script src="/static/js/audio.js"></script>
+  <script src="/static/js/canvas.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
