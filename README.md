@@ -15,28 +15,47 @@ Instead of navigating slow, cluttered portals or searching through disorganized 
 
 ---
 
+## Important Note: Run Locally for Best Performance
+
+> [!TIP]
+> **Recommended: Run locally instead of using the online deployment.**
+> While the online Vercel link is available for quick catalog browsing, running locally is strongly recommended for actual studying and downloading:
+> 
+> - **Fast and Unrestricted**: Running on your local machine bypasses Vercel serverless load throttling, cold starts, and the strict 4.5 MB payload limit on batch ZIP archives.
+> - **No Server Load Limits**: Vercel serverless functions have short execution timeouts under heavy concurrent student traffic. Local runs give direct, reliable download speeds.
+> - **Two Local Interfaces**: Choose between the visual web app (`app.py`) or the interactive terminal CLI tool (`CLI.py`).
+
+---
+
 ## Quick Start (Run Locally)
 
 ### Prerequisites
 
 - Python 3.9 or higher
 
-### Steps
+### 1. Install Dependencies
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
-2. Start the application:
-   ```bash
-   python3 app.py
-   ```
+### 2. Choose Your Interface
 
-3. Open your browser and navigate to:
-   ```
-   http://localhost:5050
-   ```
+#### Method A: Web Interface (Recommended)
+
+Start the local web server:
+```bash
+python3 app.py
+```
+Then open your web browser to `http://localhost:5050`.
+
+#### Method B: Interactive Terminal Downloader (CLI)
+
+Run the rich terminal CLI directly:
+```bash
+python3 CLI.py
+```
+Features interactive search menus, multi-campus filtering, progress bars, and direct PDF downloads into `./Past_Papers/`.
 
 ---
 
